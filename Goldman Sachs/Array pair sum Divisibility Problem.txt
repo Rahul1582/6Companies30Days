@@ -1,0 +1,45 @@
+class Solution {
+  public:
+    bool canPair(vector<int> nums, int k) {
+        // Code here.
+        
+        int n=nums.size();
+        
+        if(n%2==0){
+            
+            unordered_map<int,int> m1;
+            
+            for(auto i:nums){
+                m1[(i)%k]++;
+            }
+            
+            for(int i=0;i<n;i++){
+                
+                int h = (nums[i])%k;
+                
+                int rem = k-h;
+                
+                if(h==0){
+                    
+                    if(m1[h]%2!=0){
+                        return false;
+                    }
+                    
+                }
+                
+                else if(m1[h]!=m1[rem]){
+                        return false;
+                    }
+            }
+            
+            
+             return true;
+        }
+        
+        else{
+            return false;
+        }
+        
+       
+    }
+};

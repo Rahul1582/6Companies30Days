@@ -1,0 +1,70 @@
+class Solution{
+public:
+    int *findTwoElement(int *arr, int n) {
+        // code here
+        
+        int x=0;
+        
+        int y=0;
+        
+        int xorall=0;
+        
+        for(int i=0;i<n;i++){
+            
+            xorall^=arr[i];
+            
+        }
+        
+        for(int i=1;i<=n;i++){
+            xorall^=i;
+        }
+          
+        
+        int *a = new int[2];
+        
+        int two = (xorall)&(~(xorall-1));
+   
+        for(int i=0;i<n;i++){
+            
+            if(two&arr[i]){
+                x = x^arr[i];
+            }
+            
+            else{
+                y = y^arr[i];
+
+            }
+        }
+        
+        for(int i=1;i<=n;i++){
+            
+            if(two&i){
+                x = x^i;
+            }
+            
+            else{
+                y = y^i;
+
+            }
+        }
+        
+        for(int i=0;i<n;i++){
+            
+            if(arr[i]==x){
+                a[0] = x;
+                a[1] = y;
+            break;
+            }
+            
+            else if(arr[i]==y){
+                a[0] = y;
+                a[1] = x;
+                break;
+            }
+}
+
+        
+        return a;
+        
+    }
+};

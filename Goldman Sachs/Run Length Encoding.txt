@@ -1,0 +1,40 @@
+string encode(string src)
+{     
+  //Your code here 
+  
+  string ans;
+  
+  char t = src[0];
+  
+  int a=0;
+  
+  for(int i=1;i<src.length();i++){
+      
+      if(t==src[i]){
+          a++;
+      }
+      
+      else{
+          
+          ans+=t;
+          ans+=to_string(a+1);
+          a=0;
+      }
+      
+      t = src[i];
+      
+  }
+  
+  if(a>0){
+      
+      ans+=t;
+      ans+=(to_string(a+1));
+  }
+  
+  else{
+      ans+=t;
+      ans+=(to_string(1));
+  }
+  
+  return ans;
+}     
