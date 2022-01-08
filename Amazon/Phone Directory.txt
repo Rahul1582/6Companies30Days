@@ -1,0 +1,98 @@
+class Solution{
+public:
+
+class Trie{
+public:
+   unordered_map<char,Trie*> m1;
+   bool isend;
+    
+    Trie()
+    {
+        isend = false;
+    }
+};
+
+void insert(Trie* root, string s){
+    
+    Trie* curr = root;
+    
+    for(int i=0;i<s.length();i++){
+        
+        if(curr->m1.find(s[i])==curr->m1.end()){
+            curr->m1[s[i]] = new Trie();
+        }
+
+        curr = curr->m1[s[i]];
+        
+    }
+    
+    curr->isend = true;
+}
+
+void find(Trie* curr, string g, vector<string> &temp){
+
+if(curr->isend){
+    temp.push_back(g);
+}
+
+char c;
+
+for(int i=0;i<26;i++){
+    
+    c = char('a'+i);
+    
+            if(curr->m1.find(c)==curr->m1.end()) 
+            {
+                continue;
+            }
+            g.push_back(c);
+            find(curr->m1[c],g,temp);
+            g.pop_back();
+}
+}
+    vector<vector<string>> displayContacts(int n, string contact[], string s)
+    {
+        // code here
+        Trie* root= new Trie();
+        
+        vector<vector<string>> ans;
+        
+        for(int i=0;i<n;i++){
+            insert(root,contact[i]);
+        }
+        
+
+        string g;
+        
+        Trie* curr = root;
+        
+        for(int i=0;i<s.length();i++){
+            
+            g+=s[i];
+            
+            if(curr->m1.find(s[i])==curr->m1.end()) break;
+            else curr = curr->m1[s[i]];
+            
+            vector<string> temp;
+            find(curr,g,temp);
+            
+            
+            
+            if(temp.empty()){
+                break;
+            }
+            
+            else{
+                ans.push_back(temp);
+            }
+            
+        }
+        
+        while(ans.size()<s.size()){
+            ans.push_back({"0"});
+        }
+        
+        return ans;
+        
+    }
+};

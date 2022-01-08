@@ -1,0 +1,42 @@
+class Solution
+{
+    public:
+    //Function to serialize a tree and return a list containing nodes of tree.
+    
+    void ans(Node* root, vector<int> &res){
+        
+        if(root==NULL){
+            
+            res.push_back(int(NULL));
+            return;
+        }
+        
+        res.push_back(root->data);
+        ans(root->left,res);
+        ans(root->right,res);
+  
+    }
+    vector<int> serialize(Node *root) 
+    {
+        vector<int>res;
+        ans(root,res);
+        return res;
+    }
+    
+    int idx=0;
+    
+    Node * deSerialize(vector<int> &res)
+    {
+       if(res[idx]==NULL)
+       {
+           idx++;
+           return NULL;
+       }
+       Node*root=new Node(res[idx++]);
+       root->left=deSerialize(res);
+       root->right=deSerialize(res);
+       return root;
+    }
+    
+
+};

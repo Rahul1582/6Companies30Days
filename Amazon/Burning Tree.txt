@@ -1,0 +1,94 @@
+class Solution {
+  public:
+  
+  Node* targetnode;
+  
+  void find(Node* root, int target){
+      
+      if(!root){
+          return;
+      }
+      
+      if(root->data==target){
+          targetnode = root;
+          return;
+      }
+      
+      find(root->left,target);
+      
+      find(root->right,target);
+  }
+  
+  void getparent(Node* root, unordered_map<Node*, Node*> &parent){
+      
+      if(!root){
+          return;
+      }
+      
+      if(root->left){
+          parent[root->left] = root;
+      }
+      
+      if(root->right){
+          parent[root->right] = root;
+      }
+      
+      getparent(root->left,parent);
+      
+      getparent(root->right,parent);
+  }
+  
+    int minTime(Node* root, int target) 
+    {
+        // Your code goes here
+        
+        queue<Node*> q;
+        
+        find(root,target);
+        
+        unordered_map<Node*,Node*> parent;
+        
+        unordered_map<Node* , bool>visited;
+        
+        getparent(root,parent);
+        
+        q.push(targetnode);
+        
+        visited[targetnode]= true;
+        
+        int ans=-1;
+        
+        while(!q.empty()){
+            
+            int size = q.size();
+            
+            for(int i=0;i<size;i++){
+                
+              auto front = q.front();
+            
+              q.pop();
+               
+              if(front->left && !visited[front->left]){
+                  visited[front->left]=true;
+                  q.push(front->left);
+              }
+              
+              if(front->right && !visited[front->right]){
+                  visited[front->right] = true;
+                  q.push(front->right);
+              }
+              
+              if(parent[front] && !visited[parent[front]]){
+                  visited[parent[front]] = true;
+                  q.push(parent[front]);
+              }
+            
+            }
+            
+            ans++;
+        }
+        
+        return ans;
+        
+    }
+};
