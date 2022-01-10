@@ -1,0 +1,42 @@
+class Solution {
+  public:
+  int dp[1000][2][201];
+  
+  int solve(int i,int A [],int K, int N,bool own){
+      
+      if(i==N){
+          return 0;
+      }
+      
+      if(dp[i][own][K]!=-1){
+          return dp[i][own][K];
+      }
+      
+      if(own){
+          int op1 = A[i] + solve(i+1,A,K,N,false);
+          
+          int op2 = solve(i+1,A,K,N, true);
+          
+          return dp[i][own][K] = max(op1,op2);
+      }
+      
+      else{
+          
+          if(K==0){
+              return 0;
+          }
+          
+          int op1 = -A[i] + solve(i+1,A,K-1,N,true);
+          
+          int op2 = solve(i+1,A,K,N,false);
+          
+          return dp[i][own][K] = max(op1,op2);
+          
+      }
+  }
+   int maxProfit(int K, int N, int A[]) {
+        // code here
+        memset(dp,-1,sizeof(dp));
+        return solve(0,A,K,N,false);
+    }
+};
