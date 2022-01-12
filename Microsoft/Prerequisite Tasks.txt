@@ -1,0 +1,53 @@
+class Solution {
+public:
+	bool isPossible(int n, vector<pair<int, int> >& pre) {
+	    // Code here
+	    
+	    vector<vector<int>> g(n);
+	    
+	    vector<int> indegree(n);
+	    
+	    for(auto i:pre){
+	        
+	        g[i.second].push_back(i.first);
+	        indegree[i.first]++;
+	    }
+	    
+	    queue<int> q;
+	    
+	    int count=0;
+	    
+	    for(int i=0;i<n;i++){
+	        
+	        if(indegree[i]==0){
+	            
+	            q.push(i);
+	        }
+	    }
+	    
+	    while(!q.empty()){
+	        
+	        int f = q.front();
+	        q.pop();
+	        
+	        count++;
+	        
+	        for(auto h:g[f]){
+	            
+	            indegree[h]--;
+	            
+	            if(indegree[h]==0){
+	                q.push(h);
+	            }
+	        }
+	    }
+	    
+	    if(count==n){
+	        return true;
+	    }
+	    
+	    else{
+	        return false;
+	    }
+	}
+};

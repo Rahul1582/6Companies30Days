@@ -1,0 +1,26 @@
+int solve(Node* root,int X,int &ans){
+    
+    if(!root){
+        return 0;
+    }
+
+    int l = solve(root->left,X,ans);
+    
+    int r = solve(root->right,X,ans);
+    
+    if(l + r + root->data==X){
+        ans++;
+    }
+
+    return l + r + root->data;
+}
+
+int countSubtreesWithSumX(Node* root, int X)
+{
+	// Code here
+	int ans=0;
+	
+	solve(root,X,ans);
+	
+	return ans;
+}
