@@ -1,0 +1,33 @@
+class Solution
+{
+    public:
+    vector<string> AllParenthesis(int n) 
+    {
+        // Your code goes here 
+        
+        vector<string> ans;
+        
+        string s;
+        
+        backtrack(s,ans,0,0,n);
+        
+        return ans;
+    }
+    
+    void backtrack(string s,vector<string>& ans,int st, int e,int n){
+        
+        if(s.length()==2*n){
+            ans.push_back(s);
+        }
+        
+        if(st<n){
+            backtrack(s+'(',ans,st+1,e,n);
+        }
+        
+        if(e<st){
+            backtrack(s+')',ans,st,e+1,n);
+        }
+        
+    }
+   
+};

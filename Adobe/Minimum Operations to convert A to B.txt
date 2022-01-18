@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    int minInsAndDel(int a[], int b[], int n, int m) {
+        // code here
+        
+        vector<int> new1;
+       
+        unordered_set<int>s;
+        
+        for(int i=0;i<m;i++){
+            s.insert(b[i]);
+        }
+        
+        for(int i=0;i<n;i++){
+            
+            if(s.find(a[i])!=s.end()){
+                
+                auto it = lower_bound(new1.begin(),new1.end(),a[i]);
+                
+                if(it==new1.end()){
+                    
+                    new1.push_back(a[i]);
+                }
+                
+                else{
+                    
+                    *it = a[i];
+                }
+            }
+        }
+        
+        
+        return n+m - 2*new1.size();
+    }
+};
