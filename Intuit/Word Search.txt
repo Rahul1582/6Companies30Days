@@ -1,0 +1,65 @@
+class Solution {
+public:
+
+const int dx[4] = {0,1,0,-1};
+
+const int dy[4] = {-1,0,1,0};
+
+   bool dfs(int r,int c,vector<vector<char>>& board,int row,int col,string &word,int n,int i,
+   vector<vector<bool>> &visited){
+       
+       if(i==n){
+           return true;
+       }
+
+      if(r<0 || c<0 || r>=row || c>=col || visited[r][c] || board[r][c]!=word[i]){
+               return false;
+      }
+           
+
+       visited[r][c] = true;
+
+       for(int j=0;j<4;j++){
+           
+           int newx = r + dx[j];
+           
+           int newy = c + dy[j];
+      
+               
+            if(dfs(newx,newy,board,row,col,word,n,i+1,visited)){
+                   return true;
+            }
+           
+       }
+       
+       visited[r][c] = false;
+       
+       return false;
+   }
+
+    bool isWordExist(vector<vector<char>>& board, string word) {
+        // Code here
+        
+        int row = board.size();
+        int col = board[0].size();
+        
+        int n=word.size();
+        
+        vector<vector<bool>>visited(row,vector<bool>(col,false));
+        
+       for(int j=0;j<row;j++){
+           
+           for(int k=0;k<col;k++){
+               
+               if(board[j][k]==word[0]){
+                   
+                   if(dfs(j,k,board,row,col,word,n,0,visited)){
+                       return true;
+                   }
+               }
+           }
+       }
+        
+      return false;  
+    }
+};

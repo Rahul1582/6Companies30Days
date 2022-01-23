@@ -1,0 +1,50 @@
+class Solution {
+public:
+    
+    int count(vector<int>& piles,int mid){
+        
+        int c=0;
+        
+        for(int i=0;i<piles.size();i++){
+            
+            if(piles[i]<=mid){
+                c+=1;
+            }
+            
+            else{
+                
+                c+=(piles[i]/mid);
+                
+                if(piles[i]%mid!=0){
+                    c++;
+                }
+            }
+            
+        }
+
+        
+        return c;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        
+        int st= *min_element(piles.begin(),piles.end());
+        
+        int en = *max_element(piles.begin(),piles.end());
+        
+        while(st<en){
+            
+            int mid = st + (en-st)/2;
+            
+            if(count(piles,mid)>h){
+                
+                st = mid+1;
+            }
+            
+            else{
+                en = mid;
+            }
+        }
+        
+        return st;
+    }
+};

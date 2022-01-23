@@ -1,0 +1,83 @@
+class Solution {
+public:
+    
+    typedef pair<int,int> pp;
+    
+    const int dx[4] = {-1,0,1,0};
+    const int dy[4] = {0,-1,0,1};
+    
+    void bfs(queue<pp> q,vector<vector<int>>& heights,int r,int c,vector<vector<bool>> &visited){
+        
+        while(!q.empty()){
+            
+            auto f = q.front();
+            
+            q.pop();
+            
+            for(int i=0;i<4;i++){
+                
+                int newx = dx[i] + f.first;
+                
+                int newy = dy[i] + f.second;
+                
+                if(newx<0 || newy<0 || newx>=r || newy>=c){
+                    continue;
+                }
+                
+                else if(visited[newx][newy]){
+                    continue;
+                }
+                
+                else if(heights[f.first][f.second]<=heights[newx][newy] && !visited[newx][newy]){
+                    q.push({newx,newy});
+                    visited[newx][newy] = true; 
+                }
+            }
+        }
+    }
+    
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        
+        int r = heights.size();
+        
+        int c = heights[0].size();
+        
+        queue<pp> qpasific;
+        queue<pp> qatlantic;
+        
+        vector<vector<bool>> vpasific(r,vector<bool>(c,false));
+        vector<vector<bool>> vatlantic(r,vector<bool>(c,false));
+        
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                
+                if(i==0 || j==0){
+                    qpasific.push({i,j});
+                    vpasific[i][j] = true;
+                }
+                
+                if(i==r-1 || j==c-1){
+                    qatlantic.push({i,j});
+                    vatlantic[i][j] =  true;
+                }
+            }
+        }
+        
+        bfs(qpasific,heights,r,c,vpasific);
+        
+        bfs(qatlantic,heights,r,c,vatlantic);
+        
+        vector<vector<int>> ans;
+        
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                
+                if(vpasific[i][j] && vatlantic[i][j]){
+                    ans.push_back({i,j});
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
