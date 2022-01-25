@@ -1,0 +1,98 @@
+int missingNumber(const string& str)
+{
+    // Code here
+    
+    
+    
+    int final = -1;
+    
+    int n = str.length();
+    
+    for(int i=1;i<=6;i++){
+        
+        vector<int> temp;
+        
+        bool check=true;
+        
+        int ans=-1;
+        
+        int curr= i;
+        
+        int inc = curr;
+        
+        for(int j=0;j<n;j+=curr){
+            
+            curr = inc;
+            
+            string g = str.substr(j,inc);
+            
+            if(temp.empty()){
+                temp.push_back(stoi(g));
+            }
+            
+            else{
+                
+                int h = stoi(g);
+                
+                
+                if(h-temp.back()==1){
+                    
+                    temp.push_back(h);
+
+                }
+                
+                else if(h<temp.back()){
+                     inc+=1;
+                     j-=i;
+                    continue;
+                }
+            
+                
+                else{
+                    
+                    int diff = h-temp.back();
+           
+                    if(diff==2){
+                    
+                     ans=temp.back()+1;
+                     temp.push_back(temp.back()+1);
+                     temp.push_back(temp.back()+1);
+                     
+                    }
+                    
+                    else{
+                        check=false;
+                        break;
+                    }
+
+                }
+            }
+            
+                                                
+            int next = stoi(g)+1;
+                    
+            string n = to_string(next);
+                    
+            inc = n.length();
+            
+        }
+        
+        if(!check){
+           ans=-1;
+        }
+        
+        else if(ans!=-1 && check){
+            final=ans;
+        }
+        
+    }
+    
+    if(final==-1){
+        return -1;
+    }
+    
+    else{
+        return final;
+    }
+
+}

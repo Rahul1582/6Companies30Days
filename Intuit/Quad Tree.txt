@@ -1,0 +1,47 @@
+Node * constructUtil(vector<vector<int>> & grid, int rs, int re, int cs, int ce){
+    if(rs>re or cs>ce){
+        return NULL;
+    }
+    if(rs == re){
+        Node * temp;
+        if(grid[rs][cs] == 1){
+            temp = new Node(true, true);    
+        }
+        else{
+            temp = new Node(false, true);
+        }
+        return temp;
+        
+    }
+    else{
+        Node * temp = new Node(false, false);
+        int rmid = (rs+re)/2;
+        int cmid = (cs+ce)/2;
+        
+        temp->topLeft = constructUtil(grid, rs, rmid, cs, cmid);
+        temp->topRight = constructUtil(grid, rs, rmid, cmid+1, ce);
+        temp->bottomLeft = constructUtil(grid, rmid+1, re, cs, cmid);
+        temp->bottomRight = constructUtil(grid, rmid+1, re, cmid+1, ce );
+        
+        if(temp->topLeft->isLeaf == true and temp->topRight->isLeaf == true and temp->bottomLeft->isLeaf == true and temp->bottomRight->isLeaf == true and temp->topLeft->val == temp->topRight->val and temp->topRight->val == temp->bottomLeft->val and temp->bottomLeft->val == temp->bottomRight->val){
+            
+            temp = new Node(temp->bottomRight->val, true);
+        }
+        
+        return temp;
+        
+    }
+}
+
+
+class Solution {
+public:
+    Node* construct(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int rs = 0;
+        int cs = 0;
+        int re = n-1;
+        int ce = n-1;
+        return constructUtil(grid, rs, re, cs, ce);
+    }
+};
