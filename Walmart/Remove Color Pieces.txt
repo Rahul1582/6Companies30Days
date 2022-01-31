@@ -1,0 +1,50 @@
+class Solution {
+public:
+    bool winnerOfGame(string colors) {
+        
+        int colora=0;
+        int colorb=0;
+        
+        int ca=0;
+        int cb=0;
+        
+        for(int i=0;i<colors.size();i++){
+            
+            if(colors[i]=='A'){
+                colora++;
+                
+                if(colorb+1>=3){
+                    cb+=(colorb-2);
+                }
+                
+                colorb=0;
+            }
+            
+            else{
+                colorb++;
+                
+                if(colora+1>=3){
+                    ca+=(colora-2);
+                }
+                
+                colora=0;
+            }
+        }
+        
+        if(colora>=3){
+            ca+=(colora-2);
+        }
+        
+        if(colorb>=3){
+            cb+=(colorb-2);
+        }
+        
+        if(ca>cb){
+            return true;
+        }
+        
+        else{
+            return false;
+        }
+    }
+};

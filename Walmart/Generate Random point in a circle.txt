@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& A, vector<string>& B) 
+    {
+        vector<string> ans;
+        
+        map<char,int> mpb;
+        
+        map<char,int> tempb;
+        
+		
+        for(auto s:B){
+            for(auto ch:s){
+                tempb[ch]++;
+                mpb[ch]=max(mpb[ch],tempb[ch]);
+            }
+            
+            tempb.clear();
+        }
+        
+        map<char,int> mpa;
+        
+        for(auto s:A){
+            for(auto ch:s){
+                mpa[ch]++;
+            }
+            
+            bool flag=true;
+            for(auto it:mpb){
+                if(it.second>mpa[it.first]){
+                    flag=false;
+                    break;
+                }
+            }
+            
+            if(flag){
+                ans.push_back(s);
+            }
+            
+            mpa.clear();
+             
+        }
+        
+        return ans;
+        
+    }
+};

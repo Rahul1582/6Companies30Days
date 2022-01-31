@@ -1,0 +1,49 @@
+class Solution {
+public:
+    
+    bool solve(vector<int> &piles,int st,int en,int curr, int &sum){
+        
+        if(st>=en){
+            
+            if(curr>(sum-curr)){
+                return true;
+            }
+            
+            else{
+                return false;
+            }
+            
+        }
+        
+        int mini = min(piles[st+1],piles[en-1]);
+        
+        bool h;
+        
+        if(mini==piles[st+1]){
+            h = solve(piles,st+1,en,curr+piles[st],sum);
+        }
+        
+        else{
+            h = solve(piles,st,en-1,curr+piles[en],sum);
+        }
+        
+        
+        if(h){
+            return true;
+        }
+        
+        else{
+            return false;
+        }
+        
+    }
+    
+    bool stoneGame(vector<int>& piles) {
+        
+        int sum = accumulate(piles.begin(),piles.end(),0);
+        
+        int n=piles.size();
+        
+        return solve(piles,0,n-1,0,sum);
+    }
+};

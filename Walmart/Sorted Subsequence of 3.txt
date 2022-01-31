@@ -1,0 +1,35 @@
+class Solution{
+  public:
+    vector<int> find3Numbers(vector<int> arr, int N) {
+        // Your code here
+        
+        vector<int> ans;
+        
+        int pre[N];
+        
+        int suf[N];
+        
+        pre[0] = arr[0];
+        
+        for(int i=1;i<N;i++){
+            
+            pre[i] = min(pre[i-1],arr[i]);
+        }
+        
+        suf[N-1] = arr[N-1];
+        
+        for(int i=N-2;i>=0;i--){
+            
+            suf[i] = max(suf[i+1],arr[i]);
+        }
+        
+        for(int i=1;i<N-1;i++){
+            
+            if(arr[i]>pre[i] && arr[i]<suf[i]){
+                return {pre[i],arr[i],suf[i]};
+            }
+        }
+        
+        return {};
+    }
+};

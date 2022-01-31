@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        
+        long ans = 0;
+        
+        int sign = 1;
+        if(dividend < 0 )sign = sign * (-1);
+        if(divisor < 0) sign = sign * (-1);
+    
+        long dividend_ = abs(dividend);
+        long divisor_ = abs(divisor);
+        
+        while(divisor_ <= dividend_) {
+            long powerOf2 = 1;
+            
+            long temp = divisor_;
+            while(temp + temp < dividend_) {
+                temp += temp;
+                powerOf2 += powerOf2;
+            }
+            
+            ans += powerOf2;
+            dividend_ -= temp;
+        }
+        return ans * sign;
+    }
+};
